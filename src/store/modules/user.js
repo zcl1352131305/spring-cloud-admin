@@ -39,7 +39,6 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
           const data = response
-          console.log('-----' + JSON.stringify(data))
           commit('SET_TOKEN', data.result.token)
           setToken(response.result.token)
           resolve()
@@ -57,7 +56,6 @@ const user = {
             reject('error')
           }
           const data = response
-          console.log('-----' + JSON.stringify(data))
           commit('SET_NAME', data.result.name)
           commit('SET_AVATAR', data.result.headImg)
           commit('SET_USERNAME', data.result.username)

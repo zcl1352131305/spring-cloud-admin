@@ -27,20 +27,37 @@ export const constantRouterMap = [
   { path: '/401', component: _import('errorPage/401'), hidden: true },
   {
     path: '',
-    component: Layout
+    component: Layout,
+    redirect: '/home/init'
+  },
+  {
+    path: '/home',
+    component: Layout,
+    children: [
+      {
+        path: 'init',
+        component: _import('home/index'),
+        name: 'homeInit',
+        meta: {
+          title: '主页'
+        }
+      }
+    ]
   },
   {
     path: '/sysAdmin',
     component: Layout,
-    redirect: '/sysAdmin/sysUser',
     children: [
       {
-        path: '/sysUser',
-        redirect: '/sysAdmin/sysUser/index',
+        path: 'sysUser',
+        component: _import('user/index'),
+        redirect: '/sysAdmin/sysUser/init',
         children: [
           {
-            path: '/index',
-            component: _import('user/index')
+            path: 'init',
+            component: _import('user/init'),
+            name: 'sysUserInit',
+            meta: { title: '用户管理' }
           }
         ]
       }

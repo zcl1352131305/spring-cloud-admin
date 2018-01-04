@@ -15,7 +15,6 @@ router.beforeEach((to, from, next) => {
     } else {
       // 获取用户基本信息以及权限菜单信息
       store.dispatch('GetUserInfo').then(res => {
-        console.log('=====' + store.getters.user_menus)
         next()
       }).catch(() => {
         next({ path: '/login' })
