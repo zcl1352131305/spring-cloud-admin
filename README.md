@@ -1,2 +1,2 @@
 # vue-element-admin
-spring-cloud后台管理系统
+spring-cloud分布式项目vue框架
