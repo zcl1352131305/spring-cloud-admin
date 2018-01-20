@@ -41,7 +41,7 @@ service.interceptors.response.use(
     }
     const res = response.data
     if (res.code === 401 || res.code === '401') {
-      location.href = '/login'
+      location.href = '/'
     } else if (res.code === 402 || res.code === '402') {
       Message({
         message: res.message,
@@ -67,12 +67,16 @@ service.interceptors.response.use(
 
   error => {
     removeToken()
-    console.log('err' + error)// for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    const code = error.request.status
+    if (code === 401 || code === '401') {
+      location.href = '/'
+    } else {
+      Message({
+        message: error.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   })
 

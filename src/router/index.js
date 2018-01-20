@@ -56,8 +56,14 @@ export const constantRouterMap = [
           {
             path: 'init',
             component: _import('user/init'),
-            name: 'sysUserInit',
-            meta: { title: '用户管理' }
+            name: 'sysUser',
+            meta: { title: '用户管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('user/edit'),
+            name: 'sysUser',
+            meta: { title: '用户编辑', isTag: false }
           }
         ]
       }
