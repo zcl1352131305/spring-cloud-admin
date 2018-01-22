@@ -5,8 +5,9 @@ import errorLog from './modules/errorLog'
 import tagsView from './modules/tagsView'
 import user from './modules/user'
 import getters from './getters'
+import baseAction from './modules/baseModule'
 
-import sysAdminUser from './modules/sysAdmin/user'
+// import sysAdminUser from './modules/sysAdmin/user'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,7 @@ const store = new Vuex.Store({
     errorLog,
     tagsView,
     user,
-    sysAdminUser
+    baseAction
   },
   getters
 })

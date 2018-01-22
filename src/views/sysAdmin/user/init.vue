@@ -38,10 +38,9 @@
 
 <script>
   import { getPageSize } from '@/utils/constant'
-  import Cookies from 'js-cookie'
 
   export default {
-    name: 'userInit',
+    name: 'sysAdminUserInit',
     data() {
       return {
         tableData: null,
@@ -55,15 +54,7 @@
         }
       }
     },
-    created() {
-      // 查询cookie中的查询条件以及分页信息并初始化
-      const searchParam = JSON.parse(Cookies.get('searchParam'))
-      if (searchParam != null && searchParam.routePath === this.$route.path) {
-        this.searchForm.name = searchParam.data.name
-        this.pageNum = searchParam.data.page
-      } else {
-        Cookies.set('searchParam', '')
-      }
+    activated() {
       this.getData()
     },
     methods: {
@@ -80,21 +71,16 @@
       handleBatchSelect(val) {
         this.batchSelect = val
       },
-      // 将查询条件以及页码缓存进cookie
-      setSearchParamCookie() {
-        Cookies.set('searchParam', {
-          data: this.searchForm,
-          routePath: this.$route.path
-        })
-      },
       // 获取列表数据
       getData() {
         this.initPageInfo()
-        this.$store.dispatch('dataPage', this.searchForm).then((data) => {
+        this.$store.dispatch('doGet', {
+          url: '/sysAdmin/user/page',
+          data: this.searchForm
+        }).then((data) => {
           this.tableData = data.list
           this.loading = false
           this.total = data.total
-          this.setSearchParamCookie()
         }).catch(() => {
           this.loading = false
         })

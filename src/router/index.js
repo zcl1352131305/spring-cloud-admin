@@ -50,18 +50,18 @@ export const constantRouterMap = [
     children: [
       {
         path: 'sysUser',
-        component: _import('user/index'),
+        component: _import('sysAdmin/user/index'),
         redirect: '/sysAdmin/sysUser/init',
         children: [
           {
             path: 'init',
-            component: _import('user/init'),
+            component: _import('sysAdmin/user/init'),
             name: 'sysUser',
             meta: { title: '用户管理', isTag: true }
           },
           {
             path: 'edit/:id',
-            component: _import('user/edit'),
+            component: _import('sysAdmin/user/edit'),
             name: 'sysUser',
             meta: { title: '用户编辑', isTag: false }
           }
