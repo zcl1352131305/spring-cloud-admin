@@ -1,8 +1,7 @@
-import { doPost, doGet, doPut, doDelete} from '@/api/base'
+import { doPost, doGet, doPut, doDelete } from '@/api/baseApi'
 
 const con = {
   actions: {
-    // 分页列表
     doPost({ commit }, params) {
       return new Promise((resolve, reject) => {
         doPost(params).then(response => {
@@ -41,6 +40,27 @@ const con = {
         }).catch(error => {
           reject(error)
         })
+      })
+    },
+    saveOrUpdate({ commit }, params) {
+      return new Promise((resolve, reject) => {
+        if (params.isEdit) {
+          params.url += 'update'
+          doPut(params).then(response => {
+            const data = response.result
+            resolve(data)
+          }).catch(error => {
+            reject(error)
+          })
+        } else {
+          params.url += 'add'
+          doPost(params).then(response => {
+            const data = response.result
+            resolve(data)
+          }).catch(error => {
+            reject(error)
+          })
+        }
       })
     }
   }

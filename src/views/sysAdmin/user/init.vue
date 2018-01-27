@@ -1,39 +1,37 @@
 <template>
-  <transition name="fade" mode="out-in">
-    <div class="app-container">
-      <div class="filter-container">
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-          <el-form-item label="姓名">
-            <el-input v-model="searchForm.name" placeholder="姓名"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="getData">查询</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div>
-        <el-table :data="tableData" v-loading="loading" border @selection-change="handleBatchSelect" style="width: 100%">
-          <el-table-column type="selection"></el-table-column>
-          <el-table-column prop="id" label="id"></el-table-column>
-          <el-table-column prop="name" label="姓名"></el-table-column>
-          <el-table-column label="操作" width="180">
-            <template scope="props">
-              <router-link :to="{path: 'edit/'+ props.row.id}" tag="span">
-                <el-button type="info" size="small" icon="edit">修改</el-button>
-              </router-link>
-              <el-button type="danger" size="small" icon="delete" @click="delData(props.row.id)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-row class="mt-5">
-          <el-col :span="24">
-            <el-button class="fl" type="danger" size="small" icon="delete" :disabled="batchSelect.length === 0" @click="batchDelData">批量删除</el-button>
-            <el-pagination class="fr"  @current-change="handleCurrentChange" :current-page="pageNum" :page-size="pageSize" layout="total, prev, pager, next" :total="total"></el-pagination>
-          </el-col>
-        </el-row>
-      </div>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+        <el-form-item label="姓名">
+          <el-input v-model="searchForm.name" placeholder="姓名"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="getData">查询</el-button>
+        </el-form-item>
+      </el-form>
     </div>
-  </transition>
+    <div>
+      <el-table :data="tableData" v-loading="loading" border @selection-change="handleBatchSelect" style="width: 100%">
+        <el-table-column type="selection"></el-table-column>
+        <el-table-column prop="id" label="id"></el-table-column>
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column label="操作" width="180">
+          <template scope="props">
+            <router-link :to="{path: 'edit/'+ props.row.id}" tag="span">
+              <el-button type="info" size="small" icon="edit">修改</el-button>
+            </router-link>
+            <el-button type="danger" size="small" icon="delete" @click="delData(props.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-row class="mt-5">
+        <el-col :span="24">
+          <el-button class="fl" type="danger" size="small" icon="delete" :disabled="batchSelect.length === 0" @click="batchDelData">批量删除</el-button>
+          <el-pagination class="fr"  @current-change="handleCurrentChange" :current-page="pageNum" :page-size="pageSize" layout="total, prev, pager, next" :total="total"></el-pagination>
+        </el-col>
+      </el-row>
+    </div>
+  </div>
 </template>
 
 <script>

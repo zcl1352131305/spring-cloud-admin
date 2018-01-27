@@ -66,9 +66,9 @@ service.interceptors.response.use(
   */
 
   error => {
-    removeToken()
     const code = error.request.status
-    if (code === 401 || code === '401') {
+    if (code === 401 || code === '401' || code === 402 || code === '402') {
+      removeToken()
       location.href = '/'
     } else {
       Message({

@@ -1,8 +1,10 @@
 <template>
   <div>
-    <keep-alive include="sysAdminUserInit">
-      <router-view></router-view>
-    </keep-alive>
+    <transition name="fade" mode="out-in">
+      <keep-alive include="sysAdminUserInit">
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
