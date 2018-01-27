@@ -7,6 +7,9 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getData">查询</el-button>
+          <router-link :to="{ path: 'add' }">
+            <el-button type="success">新增</el-button>
+          </router-link>
         </el-form-item>
       </el-form>
     </div>
@@ -85,11 +88,38 @@
       },
       // 删除数据
       delData(id) {
-        alert(id)
+        this.$confirm('确认删除选中记录吗？', '提示', {
+          type: 'warning'
+        }).then(() => {
+          this.$store.dispatch('doDelete', {
+            url: '/sysAdmin/user/remove/' + id
+          }).then((data) => {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.loading = true
+            this.getData()
+          })
+        }).catch(() => {})
       },
       // 批量删除数据
       batchDelData() {
-        location.href = '/home/init'
+        this.$confirm('确认删除选中记录吗？', '提示', {
+          type: 'warning'
+        }).then(() => {
+          const ids = this.batchSelect.map(item => item.id).toString()
+          this.$store.dispatch('doDelete', {
+            url: '/sysAdmin/user/batchRemove/' + ids
+          }).then((data) => {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.loading = true
+            this.getData()
+          })
+        }).catch(() => {})
       }
     }
   }

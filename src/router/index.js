@@ -64,6 +64,12 @@ export const constantRouterMap = [
             component: _import('sysAdmin/user/edit'),
             name: 'sysUser',
             meta: { title: '用户编辑', isTag: false }
+          },
+          {
+            path: 'add',
+            component: _import('sysAdmin/user/edit'),
+            name: 'sysUser',
+            meta: { title: '用户新增', isTag: false }
           }
         ]
       }

@@ -72,6 +72,10 @@
           isEdit: this.isEdit,
           data: this.form
         }).then((data) => {
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
           history.go(-1)
         })
       },
