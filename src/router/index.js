@@ -72,6 +72,31 @@ export const constantRouterMap = [
             meta: { title: '用户新增', isTag: false }
           }
         ]
+      },
+      {
+        path: 'sysGroup',
+        component: _import('sysAdmin/group/index'),
+        redirect: '/sysAdmin/sysGroup/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('sysAdmin/group/init'),
+            name: 'sysGroup',
+            meta: { title: '组管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('sysAdmin/group/edit'),
+            name: 'sysGroup',
+            meta: { title: '组编辑', isTag: false }
+          },
+          {
+            path: 'add',
+            component: _import('sysAdmin/group/edit'),
+            name: 'sysGroup',
+            meta: { title: '组新增', isTag: false }
+          }
+        ]
       }
     ]
   }

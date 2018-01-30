@@ -12,13 +12,6 @@ export function loginByUsername(username, password) {
   })
 }
 
-export function logout() {
-  return request({
-    url: '/login/logout',
-    method: 'post'
-  })
-}
-
 export function getUserInfo() {
   return request({
     url: '/sysAdmin/user/loginUserInfo',

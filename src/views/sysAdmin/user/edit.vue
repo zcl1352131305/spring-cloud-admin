@@ -30,7 +30,7 @@
 
 <script>
   export default {
-    name: 'sysAdminUserEdit',
+    name: 'edit',
     data() {
       return {
         isEdit: false,

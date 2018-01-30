@@ -14,37 +14,25 @@
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-          placeholder="密码" />
+        <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="密码" />
         <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
       </el-form-item>
 
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
 
-      <div class="tips">账号:admin 密码随便填</div>
-      <div class="tips">账号:editor  密码随便填</div>
-
-      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">打开第三方登录</el-button>
     </el-form>
-
-    <el-dialog title="第三方验证" :visible.sync="showDialog">
-      本地不能模拟，请结合自己业务进行模拟！！！<br/><br/><br/>
-      邮箱登录成功,请选择第三方验证<br/>
-      <!--<social-sign />-->
-    </el-dialog>
 
   </div>
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
 
 export default {
   name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+      if (value.length < 5) {
+        callback(new Error('用户名不能小于5位'))
       } else {
         callback()
       }

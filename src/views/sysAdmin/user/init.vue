@@ -41,7 +41,7 @@
   import { getPageSize } from '@/utils/constant'
 
   export default {
-    name: 'sysAdminUserInit',
+    name: 'init',
     data() {
       return {
         tableData: null,
