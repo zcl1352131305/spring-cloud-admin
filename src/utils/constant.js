@@ -1,5 +1,5 @@
 
-const pageSize = 2
+const pageSize = 10
 
 export function getPageSize() {
   return pageSize

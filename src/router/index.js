@@ -49,52 +49,77 @@ export const constantRouterMap = [
     component: Layout,
     children: [
       {
-        path: 'sysUser',
+        path: 'user',
         component: _import('sysAdmin/user/index'),
-        redirect: '/sysAdmin/sysUser/init',
+        redirect: '/sysAdmin/user/init',
         children: [
           {
             path: 'init',
             component: _import('sysAdmin/user/init'),
-            name: 'sysUser',
+            name: 'sysAdminUser',
             meta: { title: '用户管理', isTag: true }
           },
           {
             path: 'edit/:id',
             component: _import('sysAdmin/user/edit'),
-            name: 'sysUser',
+            name: 'sysAdminUser',
             meta: { title: '用户编辑', isTag: false }
           },
           {
             path: 'add',
             component: _import('sysAdmin/user/edit'),
-            name: 'sysUser',
+            name: 'sysAdminUser',
             meta: { title: '用户新增', isTag: false }
           }
         ]
       },
       {
-        path: 'sysGroup',
+        path: 'group',
         component: _import('sysAdmin/group/index'),
-        redirect: '/sysAdmin/sysGroup/init',
+        redirect: '/sysAdmin/group/init',
         children: [
           {
             path: 'init',
             component: _import('sysAdmin/group/init'),
-            name: 'sysGroup',
+            name: 'sysAdminGroup',
             meta: { title: '组管理', isTag: true }
           },
           {
             path: 'edit/:id',
             component: _import('sysAdmin/group/edit'),
-            name: 'sysGroup',
+            name: 'sysAdminGroup',
             meta: { title: '组编辑', isTag: false }
           },
           {
             path: 'add',
             component: _import('sysAdmin/group/edit'),
-            name: 'sysGroup',
+            name: 'sysAdminGroup',
             meta: { title: '组新增', isTag: false }
+          }
+        ]
+      },
+      {
+        path: 'menu',
+        component: _import('sysAdmin/menu/index'),
+        redirect: '/sysAdmin/menu/init',
+        children: [
+          {
+            path: 'init',
+            component: _import('sysAdmin/menu/init'),
+            name: 'sysAdminMenu',
+            meta: { title: '菜单管理', isTag: true }
+          },
+          {
+            path: 'edit/:id',
+            component: _import('sysAdmin/menu/edit'),
+            name: 'sysAdminMenu',
+            meta: { title: '菜单编辑', isTag: false }
+          },
+          {
+            path: 'add',
+            component: _import('sysAdmin/menu/edit'),
+            name: 'sysAdminMenu',
+            meta: { title: '菜单新增', isTag: false }
           }
         ]
       }
