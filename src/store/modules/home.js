@@ -8,7 +8,7 @@ const home = {
     name: '',
     avatar: '',
     menus: [],
-    elements: []
+    elements: ''
   },
 
   mutations: {
@@ -27,7 +27,7 @@ const home = {
     SET_MENUS: (state, menus) => {
       state.menus = menus
     },
-    SET_Elements: (state, elements) => {
+    SET_ELEMENTS: (state, elements) => {
       state.elements = elements
     }
   },
@@ -60,7 +60,7 @@ const home = {
           commit('SET_AVATAR', data.result.headImg)
           commit('SET_USERNAME', data.result.username)
           commit('SET_MENUS', data.result.menus)
-          commit('SET_Elements', data.result.elements)
+          commit('SET_ELEMENTS', data.result.elements)
           resolve(response)
         }).catch(error => {
           reject(error)

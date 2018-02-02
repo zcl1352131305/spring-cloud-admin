@@ -7,7 +7,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getData">查询</el-button>
-          <router-link :to="{ path: 'add' }">
+          <router-link :to="{ path: 'add' }" v-if="auths.indexOf('sysAdminUser:btn_add') != -1">
             <el-button type="success">新增</el-button>
           </router-link>
         </el-form-item>
@@ -21,15 +21,15 @@
         <el-table-column label="操作" width="180">
           <template scope="props">
             <router-link :to="{path: 'edit/'+ props.row.id}" tag="span">
-              <el-button type="info" size="small" icon="edit">修改</el-button>
+              <el-button type="info" size="small" icon="edit"  v-if="auths.indexOf('sysAdminUser:btn_upd') != -1">修改</el-button>
             </router-link>
-            <el-button type="danger" size="small" icon="delete" @click="delData(props.row.id)">删除</el-button>
+            <el-button type="danger" size="small" icon="delete" @click="delData(props.row.id)" v-if="auths.indexOf('sysAdminUser:btn_del') != -1">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-row class="mt-5">
         <el-col :span="24">
-          <el-button class="fl" type="danger" size="small" icon="delete" :disabled="batchSelect.length === 0" @click="batchDelData">批量删除</el-button>
+          <el-button class="fl" type="danger" size="small" icon="delete" :disabled="batchSelect.length === 0" @click="batchDelData" v-if="auths.indexOf('sysAdminUser:btn_del') != -1">批量删除</el-button>
           <el-pagination class="fr"  @current-change="handleCurrentChange" :current-page="pageNum" :page-size="pageSize" layout="total, prev, pager, next" :total="total"></el-pagination>
         </el-col>
       </el-row>
@@ -44,6 +44,7 @@
     name: 'init',
     data() {
       return {
+        auths: this.$store.getters.elements,
         tableData: null,
         loading: true,
         pageNum: 1, // 当前页码

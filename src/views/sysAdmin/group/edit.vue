@@ -102,12 +102,12 @@
             message: '保存成功',
             type: 'success'
           })
-          history.go(-1)
+          this.back()
         })
       },
       // 返回列表页
       back() {
-        history.go(-1)
+        this.$router.go(-1)
       }
     }
 

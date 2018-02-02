@@ -1,6 +1,12 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="用户名" >
+        <el-input v-model="form.username"></el-input>
+      </el-form-item>
+      <el-form-item label="密码" >
+        <el-input v-model="form.password"></el-input>
+      </el-form-item>
       <el-form-item label="姓名" >
         <el-input v-model="form.name"></el-input>
       </el-form-item>
@@ -37,6 +43,8 @@
         routerID: this.$route.params.id,
         form: {
           id: '',
+          username: '',
+          password: '',
           name: '',
           gender: '',
           birthday: '',
@@ -57,6 +65,8 @@
           if (data != null) {
             this.isEdit = true
             this.form.id = data.id
+            this.form.username = data.username
+            this.form.password = data.password
             this.form.name = data.name
             this.form.gender = data.gender
             this.form.birthday = data.birthday
@@ -76,12 +86,12 @@
             message: '保存成功',
             type: 'success'
           })
-          history.go(-1)
+          this.back()
         })
       },
       // 返回列表页
       back() {
-        history.go(-1)
+        this.$router.go(-1)
       }
     }
 

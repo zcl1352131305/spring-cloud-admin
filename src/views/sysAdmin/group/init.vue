@@ -87,7 +87,20 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="组权限" name="third">组权限</el-tab-pane>
+
+
+              <el-tab-pane label="组权限" name="third">
+                <el-tree
+                  :data="menuTrees"
+                  :props="defaultProps"
+                  node-key="id"
+                  show-checkbox
+                  ref="authTree"
+                  :expand-on-click-node="false"
+                  >
+                </el-tree>
+                <el-button type="primary" @click="updMenuAndAuth">修改该组菜单权限</el-button>
+              </el-tab-pane>
             </el-tabs>
         </el-col>
       </el-row>
@@ -103,6 +116,7 @@
         treeData: null, // 树状 组
         activeName: 'groupLeaders', // 选项卡初始选中
         activeGroup: '', // 当前选中的组
+        // 组领导相关
         groupLeaders: [], // 组领导
         leaderSearch: { // 组领导查询条件
           userName: ''
@@ -110,6 +124,7 @@
         leaderAddForm: { // 组领导添加表单
           userId: ''
         },
+        // 组成员相关
         groupMembers: [], // 组成员
         memberSearch: { // 组成员查询条件
           userName: ''
@@ -122,11 +137,14 @@
           children: 'children',
           label: 'name'
         },
-        loading: true
+        loading: true,
+        // 组权限相关
+        menuTrees: null
       }
     },
     activated() {
       this.getAllUsers()
+      this.getAllMenusAndAuths()
       this.getData()
     },
     methods: {
@@ -136,6 +154,14 @@
           url: '/sysAdmin/user/all'
         }).then((data) => {
           this.users = data
+        }).catch(() => {})
+      },
+      // 获取所有菜单和菜单权限
+      getAllMenusAndAuths() {
+        this.$store.dispatch('doGet', {
+          url: '/sysAdmin/menu/treeWithAuth'
+        }).then((data) => {
+          this.menuTrees = data
         }).catch(() => {})
       },
       // 获取树形组数据
@@ -173,6 +199,7 @@
       initGroupInfo(data, node, store) {
         this.activeGroup = data.id
         this.initLeaderAndMember()
+        this.initMenuAndAuth()
       },
       // 初始化组领导以及成员信息
       initLeaderAndMember() {
@@ -292,6 +319,50 @@
             type: 'success'
           })
           this.initLeaderAndMember()
+        })
+      },
+      initMenuAndAuth() {
+        this.$refs.authTree.setCheckedKeys([])
+        this.$store.dispatch('doGet', {
+          url: '/sysAdmin/group/menuAndAuth/' + this.activeGroup
+        }).then((data) => {
+          if (data != null && data.length > 0) {
+            const checkIds = []
+            data.forEach(function(res) {
+              checkIds.push(res.resourceId)
+            })
+            this.$refs.authTree.setCheckedKeys(checkIds)
+          }
+        }).catch(() => {
+          this.loading = false
+        })
+      },
+      updMenuAndAuth() {
+        const trees = []
+        const trees1 = this.$refs.authTree.getCheckedNodes(true)
+        for (var i = 0; i < trees1.length; i++) {
+          trees.push({
+            id: trees1[i].id,
+            parentId: trees1[i].parentId,
+            name: trees1[i].name,
+            type: trees1[i].type
+          })
+        }
+        console.log(JSON.stringify(trees))
+        this.$store.dispatch('doPut', {
+          url: '/sysAdmin/group/menuAndAuth/update',
+          data: {
+            groupId: this.activeGroup,
+            resource: trees
+          }
+        }).then((data) => {
+          this.$message({
+            message: '修改成功',
+            type: 'success'
+          })
+          this.initMenuAndAuth()
+        }).catch(() => {
+          this.loading = false
         })
       },
       // 编辑组时跳转到编辑页面
