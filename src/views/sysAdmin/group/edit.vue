@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="组名" >
+    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form-item label="组名" prop="name" >
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="编码">
@@ -51,6 +51,11 @@
           parentId: '',
           path: '',
           type: ''
+        },
+        rules: {
+          name: [
+            { required: true, message: '请输入组名称', trigger: 'blur' }
+          ]
         }
       }
     },
@@ -107,7 +112,7 @@
       },
       // 返回列表页
       back() {
-        this.$router.go(-1)
+        this.$router.back()
       }
     }
 

@@ -99,7 +99,7 @@
                   :expand-on-click-node="false"
                   >
                 </el-tree>
-                <el-button type="primary" @click="updMenuAndAuth">修改该组菜单权限</el-button>
+                <el-button type="primary" @click="updMenuAndAuth" v-if="activeGroup != null && activeGroup != ''">修改该组菜单权限</el-button>
               </el-tab-pane>
             </el-tabs>
         </el-col>

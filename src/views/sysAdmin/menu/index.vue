@@ -10,6 +10,6 @@
 
 <script>
   export default {
-    name: 'sysAdminUser'
+    name: 'sysAdminMenu'
   }
 </script>

@@ -72,7 +72,6 @@
 </template>
 
 <script>
-  import { getPageSize } from '@/utils/constant'
 
   export default {
     name: 'init',
@@ -83,9 +82,6 @@
         activeMenu: '',
         activeName: 'auth',
         loading: false,
-        pageNum: 1, // 当前页码
-        pageSize: getPageSize(), // 每页条数
-        total: 0, // 数据总条目
         batchSelect: [], //  批量选择
         searchForm: {
           name: ''
