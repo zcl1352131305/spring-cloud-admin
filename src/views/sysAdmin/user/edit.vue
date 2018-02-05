@@ -25,6 +25,19 @@
       <el-form-item label="电子邮箱" >
         <el-input v-model="form.email"></el-input>
       </el-form-item>
+      <el-form-item>
+        <el-upload
+          class="avatar-uploader"
+          action="http://upload.qiniup.com"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :on-error="handleAvatarError"
+          :before-upload="beforeAvatarUpload"
+          :data="postData">
+          <img v-if="form.imageUrl" :src="form.imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
@@ -35,6 +48,9 @@
 </template>
 
 <script>
+  import { doGet } from '@/api/baseApi'
+  import { getQiniuHost } from '@/utils/constant'
+
   export default {
     name: 'edit',
     data() {
@@ -49,7 +65,12 @@
           gender: '',
           birthday: '',
           phone: '',
-          email: ''
+          email: '',
+          imageUrl: ''
+        },
+        postData: {
+          token: '',
+          key: ''
         }
       }
     },
@@ -57,6 +78,30 @@
       this.getData()
     },
     methods: {
+      handleAvatarError(err, file, fileList) {
+        alert(JSON.stringify(err))
+      },
+      handleAvatarSuccess(res, file) {
+        this.form.imageUrl = getQiniuHost() + res.key
+      },
+      beforeAvatarUpload(file) {
+        return new Promise((resolve, reject) => {
+          doGet({
+            url: '/sysAdmin/qiniu/token',
+            data: {
+              fileName: file.name
+            }
+          }).then(response => {
+            const token = response.result
+            this.postData.token = token
+            this.postData.key = file.name
+            resolve(true)
+          }).catch(err => {
+            console.log(err)
+            reject(false)
+          })
+        })
+      },
       // 获取数据
       getData() {
         this.$store.dispatch('doGet', {
@@ -97,3 +142,28 @@
 
   }
 </script>
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+</style>
