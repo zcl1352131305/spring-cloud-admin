@@ -34,7 +34,7 @@
           :on-error="handleAvatarError"
           :before-upload="beforeAvatarUpload"
           :data="postData">
-          <img v-if="form.imageUrl" :src="form.imageUrl" class="avatar">
+          <img v-if="form.headImg" :src="form.headImg" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -66,7 +66,7 @@
           birthday: '',
           phone: '',
           email: '',
-          imageUrl: ''
+          headImg: ''
         },
         postData: {
           token: '',
@@ -82,7 +82,7 @@
         alert(JSON.stringify(err))
       },
       handleAvatarSuccess(res, file) {
-        this.form.imageUrl = getQiniuHost() + res.key
+        this.form.headImg = getQiniuHost() + res.key
       },
       beforeAvatarUpload(file) {
         return new Promise((resolve, reject) => {
@@ -117,6 +117,7 @@
             this.form.birthday = data.birthday
             this.form.phone = data.phone
             this.form.email = data.email
+            this.form.headImg = data.headImg
           }
         })
       },
